@@ -7,7 +7,7 @@ export const metadata = {
 
 const Login = () => {
     return (
-        <div className="flex w-screen flex-col items-center gap-32 p-20 md:h-screen md:items-center
+        <div className="flex w-screen flex-col items-center gap-32 p-10 md:p-20 md:h-screen md:items-center
         md:flex-row">
             <div className="flex">
                 <Image

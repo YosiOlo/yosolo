@@ -1,7 +1,15 @@
-import Image from 'next/image'
+import Heading from "@/components/Heading"
 
-export default function Home() {
+import { getServerSession } from 'next-auth';
+import { authOptions } from "./lib/auth";
+
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
   return (
-    <div>Home</div>
+    <div>
+      <pre>{JSON.stringify(session, null, 2)}</pre>
+      <Heading />
+    </div>
   )
 }
