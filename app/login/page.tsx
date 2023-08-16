@@ -1,11 +1,18 @@
 import FormLogin from "@/components/FormLogin"
+import { getServerSession } from "next-auth";
 import Image from "next/image"
+import { redirect } from "next/navigation";
+import { authOptions } from "../lib/auth";
 
 export const metadata = {
     title: "Yoso Meka | Login",
 }
 
-const Login = () => {
+const Login = async () => {
+    const session = await getServerSession(authOptions);
+
+    if (session) redirect('/dashboard');
+
     return (
         <div className="flex w-screen flex-col items-center gap-32 p-10 md:p-20 md:h-screen md:items-center
         md:flex-row">
