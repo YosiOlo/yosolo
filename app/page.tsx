@@ -7,9 +7,5 @@ export default async function Home() {
 
   if (!session) redirect('/login');
 
-  return (
-    <main className="">
-      <h1 className='text-2xl font-semibold tracking-tight'>Home page</h1>
-    </main>
-  )
+  return redirect('/dashboard');
 }
