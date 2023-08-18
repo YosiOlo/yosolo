@@ -4,3 +4,9 @@ export interface SidebarItemProps {
     name: string;
     submenu?: SidebarItemProps[];
 }
+
+export interface DashboardCardProps {
+    title: string;
+    total: string;
+    color: string;
+}

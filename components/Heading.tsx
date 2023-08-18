@@ -10,9 +10,9 @@ const Heading = () => {
     return (
         <header className="bg-[#4e73df] flex justify-end">
             <details className="dropdown dropdown-end">
-                <summary className="btn my-3 btn-ghost border-l-2 border-l-white text-white 
-                hover:bg-transparent flex-col text-xs items-start rounded-none
-                after:w-[1px] after:absolute relative after:left-0 after:h-full ">
+                <summary className="btn my-3 btn-ghost after:bg-white text-white relative
+                hover:bg-transparent flex-col text-xs items-start rounded-none after:w-[2px] 
+                after:absolute after:left-0 after:h-full ">
                     {status === 'loading' ? (
                         <span className="loading loading-spinner text-white"></span>
                     ) : (

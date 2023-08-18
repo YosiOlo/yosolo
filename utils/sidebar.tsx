@@ -13,7 +13,15 @@ import {
     MdOutlineFactCheck,
     MdPerson,
     MdOutlineHomeWork,
+    MdPeopleAlt,
+    MdRocketLaunch,
+    MdOutlineDiversity3,
 } from "react-icons/md";
+
+import {
+    RiPencilRuler2Fill,
+    RiTruckFill,
+} from "react-icons/ri";
 
 const sidebar: SidebarItemProps[] = [
     {
@@ -22,9 +30,36 @@ const sidebar: SidebarItemProps[] = [
         name: 'Dashboard',
     },
     {
-        path: '/master',
+        path: '',
         icon: <MdSettings />,
         name: 'Data Master',
+        submenu: [
+            {
+                path: '/satuan-ukuran',
+                icon: <RiPencilRuler2Fill />,
+                name: 'Ukuran',
+            },
+            {
+                path: '/customers',
+                icon: <MdPeopleAlt />,
+                name: 'Pelanggan',
+            },
+            {
+                path: '/suplier',
+                icon: <RiTruckFill />,
+                name: 'Pemasok',
+            },
+            {
+                path: '/subcont',
+                icon: <MdRocketLaunch />,
+                name: 'Subcont',
+            },
+            {
+                path: '/divisi',
+                icon: <MdOutlineDiversity3 />,
+                name: 'Divisi',
+            }
+        ]
     },
     {
         path: '/inventory',
