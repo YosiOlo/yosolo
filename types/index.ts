@@ -10,3 +10,11 @@ export interface DashboardCardProps {
     total: string;
     color: string;
 }
+
+export type ModalState = {
+    name: string;
+    phone?: string;
+    city?: string;
+    address?: string;
+    fax?: string;
+};

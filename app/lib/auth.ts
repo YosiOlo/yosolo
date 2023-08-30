@@ -37,7 +37,7 @@ export const authOptions: AuthOptions = {
                     name: user.name,
                     email: user.email,
                     roleId: user.roleId,
-                    status: user.statusId,
+                    statusId: user.statusId,
                 };
             },
         })
@@ -65,6 +65,7 @@ export const authOptions: AuthOptions = {
     },
     pages: {
         signIn: '/login',
+        error: '/login',
     },
     debug: process.env.NODE_ENV === 'development',
     session: {

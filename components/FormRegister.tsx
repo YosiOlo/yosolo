@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import type { Role } from "@prisma/client";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -33,6 +32,7 @@ const FormRegister = ({ roles }: { roles: Role[] }) => {
             const response = await axios.post('/api/register', {
                 name: username,
                 roleId: Number(role),
+                statusId: 1,
                 email,
                 password: password.confirm,
             })

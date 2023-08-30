@@ -21,7 +21,13 @@ import {
 import {
     RiPencilRuler2Fill,
     RiTruckFill,
+    RiInformationFill,
 } from "react-icons/ri";
+
+import {
+    FaUserCog,
+    FaUserFriends,
+} from "react-icons/fa";
 
 const sidebar: SidebarItemProps[] = [
     {
@@ -40,7 +46,7 @@ const sidebar: SidebarItemProps[] = [
                 name: 'Ukuran',
             },
             {
-                path: '/customers',
+                path: '/customer',
                 icon: <MdPeopleAlt />,
                 name: 'Pelanggan',
             },
@@ -112,14 +118,33 @@ const sidebar: SidebarItemProps[] = [
         name: 'Cek Item',
     },
     {
-        path: '/manage',
+        path: '',
         icon: <MdPerson />,
         name: 'Manajemen Pengguna',
+        submenu: [
+            {
+                path: '/user-roles',
+                icon: <FaUserCog />,
+                name: 'Aturan Pengguna',
+            },
+            {
+                path: '/users',
+                icon: <FaUserFriends />,
+                name: 'Data Pengguna',
+            },
+        ]
     },
     {
-        path: '/config',
+        path: '',
         icon: <MdSettings />,
         name: 'Konfigurasi',
+        submenu: [
+            {
+                path: '/status',
+                icon: <RiInformationFill />,
+                name: 'Status'
+            }
+        ]
     },
     {
         path: '/company',

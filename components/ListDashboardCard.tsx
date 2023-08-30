@@ -6,22 +6,22 @@ const ListDashboardCard = () => {
             <DashboardCard
                 title="Total Sales Order"
                 total="4,152,783,787"
-                color={"blue-600"}
+                color="blue"
             />
             <DashboardCard
                 title="Total Purchase Order"
                 total="4,152,783,787"
-                color="green-600"
+                color="green"
             />
             <DashboardCard
                 title="Total Penjualan Limbah"
                 total="4,152,783,787"
-                color="teal-600"
+                color="teal"
             />
             <DashboardCard
                 title="Gross Pendapatan"
                 total="4,152,783,787"
-                color="yellow-600"
+                color="yellow"
             />
         </div>
     )

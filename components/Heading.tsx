@@ -18,7 +18,7 @@ const Heading = () => {
                     ) : (
                         <>
                             <span>{data?.user?.name}</span>
-                            <span>{data?.user?.email}</span>
+                            <span>{data?.user?.email?.toLocaleLowerCase()}</span>
                         </>
                     )}
                 </summary>
