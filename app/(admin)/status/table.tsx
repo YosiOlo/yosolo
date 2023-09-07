@@ -4,9 +4,8 @@ import DeleteModal from "@/components/DeleteModal";
 import PaginationBar from "@/components/PaginationBar";
 import PerPageSelect from "@/components/PerPageSelect";
 import SearchBar from "@/components/SearchBar";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import Modal from "./modal";
 
 const Table = ({ data }: { data: any[] }) => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -89,12 +88,7 @@ const Table = ({ data }: { data: any[] }) => {
                                 <span>{row.fontColor}</span>
                             </td>
                             <td className="flex gap-3 justify-center items-center">
-                                <Link
-                                    href={`/user-roles`}
-                                    className="text-[#4e73df]"
-                                >
-                                    <FaEdit />
-                                </Link>
+                                <Modal data={row} />
                                 <DeleteModal
                                     id={row.id}
                                     table="status"

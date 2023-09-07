@@ -11,13 +11,11 @@ export const GET = async (request: Request, { params }: { params: { id: string }
 }
 
 export const PATCH = async (request: Request, { params }: { params: { id: string } }) => {
-    const { code, name, description, moduleAccess } = await request.json();
+    const body = await request.json();
 
     const role = await prisma.user.update({
         where: { id: Number(params.id) },
-        data: {
-            name: name,
-        }
+        data: body
     });
 
     return NextResponse.json(role, { status: 200 });

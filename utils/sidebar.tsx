@@ -22,12 +22,21 @@ import {
     RiPencilRuler2Fill,
     RiTruckFill,
     RiInformationFill,
+    RiToolsFill,
+    RiFileReduceFill,
 } from "react-icons/ri";
 
 import {
     FaUserCog,
     FaUserFriends,
+    FaTruckLoading,
+    FaBoxOpen,
+    FaBox,
+    FaRecycle,
+    FaTable,
 } from "react-icons/fa";
+
+import { CgFormatText, CgFormatUppercase } from "react-icons/cg";
 
 const sidebar: SidebarItemProps[] = [
     {
@@ -68,9 +77,56 @@ const sidebar: SidebarItemProps[] = [
         ]
     },
     {
-        path: '/inventory',
+        path: '',
         icon: <MdInventory />,
         name: 'Inventori',
+        submenu: [
+            {
+                path: '/material',
+                icon: <FaTruckLoading />,
+                name: 'Material'
+            },
+            {
+                path: '/barang-setengah-jadi',
+                icon: <FaBoxOpen />,
+                name: 'Barang Setengah Jadi'
+            },
+            {
+                path: '/barang-jadi',
+                icon: <FaBox />,
+                name: 'Barang Jadi'
+            },
+            {
+                path: '/tools',
+                icon: <RiToolsFill />,
+                name: 'Peralatan'
+            },
+            {
+                path: '/reduksi-tools',
+                icon: <RiFileReduceFill />,
+                name: 'Pengurangan Peralatan'
+            },
+            {
+                path: '/limbah',
+                icon: <FaRecycle />,
+                name: 'Limbah'
+            },
+            {
+                path: '/product',
+                icon: <FaTable />,
+                name: 'Produk'
+            },
+            {
+                path: '/formula-item',
+                icon: <CgFormatText />,
+                name: 'Formula Item'
+            },
+            {
+                path: '/formula-utama',
+                icon: <CgFormatUppercase />,
+                name: 'Formula Utama'
+            }
+        ]
     },
     {
         path: '/sell',

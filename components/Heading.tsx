@@ -1,7 +1,7 @@
 "use client";
 
 import { signOut, useSession } from 'next-auth/react';
-
+import Link from 'next/link';
 import { MdPerson, MdExitToApp } from "react-icons/md";
 
 const Heading = () => {
@@ -24,7 +24,7 @@ const Heading = () => {
                 </summary>
                 <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                     <li>
-                        <a><MdPerson /> Profile</a>
+                        <Link href="/profile"><MdPerson /> Profile</Link>
                     </li>
                     <li>
                         <a onClick={() => signOut({ callbackUrl: '/login', redirect: true })}>

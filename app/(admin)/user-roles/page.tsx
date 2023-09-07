@@ -1,5 +1,6 @@
 "use client"
 
+import HeadingDetail from "@/components/HeadingDetail";
 import type { Role } from "@prisma/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -35,17 +36,10 @@ const MainPage = () => {
                 </div>
             ) : (
                 <div className="flex justify-between items-center bg-gray-100 rounded-md p-3">
-                    <div>
-                        <p className="text-lg font-bold">Data User Role</p>
-                        <div className="flex divide-x-2">
-                            <span className="pr-4 text-info">
-                                Jumlah<div className="ms-2 badge badge-info text-white">{listData.length}</div>
-                            </span>
-                            <span className="pl-4 text-error">
-                                Sampah<div className="ms-2 badge badge-error text-white">{dataDeleted.length}</div>
-                            </span>
-                        </div>
-                    </div>
+                    <HeadingDetail
+                        exist={listData.length}
+                        deleted={dataDeleted.length}
+                    />
                     <button
                         onClick={() => setPageCreate(!pageCreate)}
                         className="text-[#4e73df] p-2 border rounded-md border-[#4e73df] cursor-pointer"

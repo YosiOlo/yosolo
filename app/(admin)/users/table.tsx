@@ -4,15 +4,17 @@ import DeleteModal from "@/components/DeleteModal";
 import PaginationBar from "@/components/PaginationBar";
 import PerPageSelect from "@/components/PerPageSelect";
 import SearchBar from "@/components/SearchBar";
-import Link from "next/link";
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import UpdateModal from "./modal";
 
 const Table = ({ data }: { data: any[] }) => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
     const [filteredData, setFilteredData] = useState<any[]>([]);
     const [filtering, setFiltering] = useState(false);
+
+    const [roles, setRoles] = useState([]);
 
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -46,6 +48,12 @@ const Table = ({ data }: { data: any[] }) => {
         : `Menampilkan ${startEntry} sampai ${endEntry} dari ${totalData} data`;
 
     useEffect(() => {
+        axios.get('/api/user-roles')
+            .then(res => setRoles(res.data))
+            .catch(error => console.log('e:', error.message))
+    }, [])
+
+    useEffect(() => {
         setFilteredData(data);
     }, [data])
 
@@ -77,17 +85,15 @@ const Table = ({ data }: { data: any[] }) => {
                             <td>{row.name}</td>
                             <td>{row.role.name}</td>
                             <td>{row.status.name}</td>
-                            <td>{row.updatedAt}</td>
+                            <td>{row.updatedAt.toLocaleString()}</td>
                             <td className="flex gap-3 justify-center items-center">
-                                <Link
-                                    href={`/user-roles/${row.id}`}
-                                    className="text-[#4e73df]"
-                                >
-                                    <FaEdit />
-                                </Link>
+                                <UpdateModal
+                                    data={row}
+                                    listRole={roles}
+                                />
                                 <DeleteModal
                                     id={row.id}
-                                    table="user-roles"
+                                    table="users"
                                 />
                             </td>
                         </tr>

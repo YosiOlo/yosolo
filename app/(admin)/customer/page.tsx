@@ -2,6 +2,7 @@ import prisma from "../../lib/prisma";
 import CustomTable from "@/components/CustomTable";
 import type { Customer } from "@prisma/client";
 import CustomModal from "@/components/CustomModal";
+import HeadingDetail from "@/components/HeadingDetail";
 
 const getDatas = async () => {
   try {
@@ -27,10 +28,10 @@ const getDatas = async () => {
 }
 
 const MainPage = async () => {
-  const lisData = await getDatas() as Customer[];
+  const listData = await getDatas() as Customer[];
 
-  const dataExist = lisData.filter(item => item.deletedAt === null);
-  const dataDeleted = lisData.filter(item => item.deletedAt !== null);
+  const dataExist = listData.filter(item => item.deletedAt === null);
+  const dataDeleted = listData.filter(item => item.deletedAt !== null);
 
   return (
     <div className="p-5 w-full">
@@ -41,17 +42,10 @@ const MainPage = async () => {
         </ul>
       </div>
       <div className="flex justify-between bg-gray-100 rounded-md p-3">
-        <div>
-          <p className="text-lg font-bold">Data Pelanggan</p>
-          <div className="flex divide-x-2">
-            <span className="pr-4 text-info">
-              Jumlah<div className="ms-2 badge badge-info text-white">{lisData.length}</div>
-            </span>
-            <span className="pl-4 text-error">
-              Sampah<div className="ms-2 badge badge-error text-white">{dataDeleted.length}</div>
-            </span>
-          </div>
-        </div>
+        <HeadingDetail
+          exist={listData.length}
+          deleted={dataDeleted.length}
+        />
         <CustomModal
           title="Tambah Data"
           table="customer"

@@ -2,6 +2,7 @@ import prisma from "../../lib/prisma";
 import CustomTable from "@/components/CustomTable";
 import type { Ukuran } from "@prisma/client";
 import CustomModal from "@/components/CustomModal";
+import HeadingDetail from "@/components/HeadingDetail";
 
 const getDatas = async () => {
   try {
@@ -38,17 +39,10 @@ const MainPage = async () => {
         </ul>
       </div>
       <div className="flex justify-between bg-gray-100 rounded-md p-3">
-        <div>
-          <p className="text-lg font-bold">Satuan Ukur</p>
-          <div className="flex divide-x-2">
-            <span className="pr-4 text-info">
-              Jumlah<div className="ms-2 badge badge-info text-white">{listUkuran.length}</div>
-            </span>
-            <span className="pl-4 text-error">
-              Sampah<div className="ms-2 badge badge-error text-white">{ukuranDeleted.length}</div>
-            </span>
-          </div>
-        </div>
+        <HeadingDetail
+          exist={listUkuran.length}
+          deleted={ukuranDeleted.length}
+        />
         <CustomModal
           title="Tambah Data"
           table="ukuran"

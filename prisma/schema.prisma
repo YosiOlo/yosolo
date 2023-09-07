@@ -44,7 +44,7 @@ model Status {
   fkey Int @default(1)
   module String?
   bgColor String @default("#037721")
-  fontColor String @default("#FFFF")
+  fontColor String @default("#ffffff")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
@@ -68,6 +68,7 @@ model Ukuran {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+  material Material[]
 }
 
 model Subcont {
@@ -91,11 +92,61 @@ model Suplier {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+  material Material[]
 }
 
 model Divisi {
   id Int @id @default(autoincrement())
   name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  formulaItem FormulaProduksi[]
+}
+
+model Material {
+  id Int @id @default(autoincrement())
+  name String
+  code String?
+  size String
+  price Int
+  totalStock Int
+  minPurchase Int
+  isStatus Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  suplier Suplier @relation(fields: [suplierId], references: [id])
+  suplierId Int
+  ukuran Ukuran @relation(fields: [ukuranId], references: [id])
+  ukuranId Int
+}
+
+model FormulaItem {
+  id Int @id @default(autoincrement())
+  name String
+  price Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  formulaProduksi FormulaProduksi[]
+}
+
+model FormulaProduksi {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  formulaItemId Int
+  formulaItem FormulaItem @relation(fields: [formulaItemId], references: [id])
+  divisiId Int
+  divisi Divisi @relation(fields: [divisiId], references: [id])
+}
+
+model FormulaUtama {
+  id Int @id @default(autoincrement())
+  name String
+  price Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?

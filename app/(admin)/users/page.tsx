@@ -1,20 +1,26 @@
-"use client"
-
 import type { User } from "@prisma/client";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { BsPlus, BsArrowLeft } from "react-icons/bs";
-import Form from "./form";
 import Table from "./table";
+import prisma from "../../lib/prisma";
 
-const MainPage = () => {
-    const [listData, setListData] = useState<User[]>([]);
+const getDatas = async () => {
+    try {
+        const res = await prisma.user.findMany({
+            orderBy: { updatedAt: 'desc' },
+            include: {
+                role: true,
+                status: true,
+            }
+        });
 
-    useEffect(() => {
-        axios.get('/api/users')
-            .then((res) => setListData(res.data))
-            .catch(error => console.log('error get', error.message));
-    }, []);
+        return res;
+
+    } catch (error) {
+        console.log('error get', error)
+    }
+}
+
+const MainPage = async () => {
+    const listData = await getDatas() as User[];
 
     const dataExist = listData.filter(item => item.deletedAt === null);
     const dataDeleted = listData.filter(item => item.deletedAt !== null);

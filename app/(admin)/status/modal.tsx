@@ -2,11 +2,16 @@
 
 import axios from 'axios';
 import { SyntheticEvent, useState } from 'react';
+import { FaEdit } from "react-icons/fa"
 
-const Modal = () => {
+const Modal = ({
+    data: initialState 
+}: {
+    data?: any
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
-    const [data, setData] = useState({
+    const [data, setData] = initialState ? useState(initialState) : useState({
         name: '',
         module: '',
         bgColor: '',
@@ -20,8 +25,21 @@ const Modal = () => {
     const onSubmitHandler = async (e: SyntheticEvent) => {
         e.preventDefault();
         setIsLoading(true);
-
+        
         await axios.post('/api/status', data)
+            .then(res => console.log(res.data))
+            .catch(error => console.log('error', error.message))
+            .finally(() => {
+                setIsLoading(false);
+                setIsModalOpen(false);
+            })
+    }
+
+    const onUpdateHandler = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        
+        await axios.patch(`/api/status/${initialState.id}`, data)
             .then(res => console.log(res.data))
             .catch(error => console.log('error', error.message))
             .finally(() => {
@@ -34,15 +52,15 @@ const Modal = () => {
         <div>
             <button
                 onClick={() => setIsModalOpen(!isModalOpen)}
-                className={'btn bg-[#4e73df] text-white hover:text-[#4e73df] hover:border-[#4e73df] border hover:bg-white hover:border'}
+                className={initialState ? 'text-[#4e73df]' : 'btn bg-[#4e73df] text-white hover:text-[#4e73df] hover:border-[#4e73df] border hover:bg-white hover:border'}
             >
-                Tambah Data
+                {initialState ? <FaEdit /> : 'Tambah Data'}
             </button>
 
             <div className={isModalOpen ? 'modal modal-open' : 'modal'}>
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg mb-5">Tambah</h3>
-                    <form onSubmit={onSubmitHandler}>
+                    <h3 className="font-bold text-lg mb-5">{initialState ? 'Update' : 'Tambah'}</h3>
+                    <form onSubmit={initialState ? onUpdateHandler : onSubmitHandler}>
                         <div className="form-control w-full mb-4">
                             <label>Name</label>
                             <input
@@ -108,7 +126,7 @@ const Modal = () => {
                             >
                                 {isLoading ? (
                                     <span className="loading loading-spinner text-white"></span>
-                                ) : 'Tambah Data'}
+                                ) : initialState ? 'Update data' : 'Tambah data'}
                             </button>
                         </div>
                     </form>
@@ -118,4 +136,4 @@ const Modal = () => {
     )
 }
 
-export default Modal
+export default Modal;
