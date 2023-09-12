@@ -2,6 +2,7 @@ import prisma from "../../lib/prisma";
 import type { Status } from "@prisma/client";
 import Table from "./table";
 import Modal from "./modal";
+import HeadingDetail from "@/components/HeadingDetail";
 
 const getDatas = async () => {
     try {
@@ -41,17 +42,10 @@ const MainPage = async () => {
                 </ul>
             </div>
             <div className="flex justify-between bg-gray-100 rounded-md p-3">
-                <div>
-                    <p className="text-lg font-bold">Data Status</p>
-                    <div className="flex divide-x-2">
-                        <span className="pr-4 text-info">
-                            Jumlah<div className="ms-2 badge badge-info text-white">{listData.length}</div>
-                        </span>
-                        <span className="pl-4 text-error">
-                            Sampah<div className="ms-2 badge badge-error text-white">{dataDeleted.length}</div>
-                        </span>
-                    </div>
-                </div>
+                <HeadingDetail
+                    exist={dataExist.length}
+                    deleted={dataDeleted.length}
+                />
                 <Modal />
             </div>
             <Table data={dataExist} />

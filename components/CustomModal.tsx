@@ -56,7 +56,7 @@ const CustomModal = ({
         <div>
             <button
                 onClick={modalHandler}
-                className={editId ? 'text-[#4e73df]' : 'btn bg-[#4e73df] text-white hover:text-[#4e73df] hover:border-[#4e73df] border hover:bg-white hover:border'}
+                className={editId ? 'text-[#4e73df]' : 'btn bg-[#4e73df] text-white hover:text-[#4e73df] hover:border-[#4e73df] border hover:bg-white hover:border capitalize'}
             >
                 {editId ? <FaEdit /> : 'Tambah Data'}
             </button>
@@ -84,7 +84,7 @@ const CustomModal = ({
                             <button type="button" className="btn" onClick={modalHandler}>Tutup</button>
                             <button
                                 type="submit"
-                                className="btn btn-primary"
+                                className="btn btn-primary capitalize"
                                 disabled={isLoading ? true : false}
                             >
                                 {isLoading ? (

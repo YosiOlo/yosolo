@@ -8,8 +8,8 @@ const FormInput = ({
     onChange: (e: any) => void,
 }) => {
     return (
-        <div className="form-control">
-            <label>{label}</label>
+        <div className="form-control mb-4">
+            <label className="capitalize">{label}</label>
             <input
                 type="text"
                 placeholder={placeholder}

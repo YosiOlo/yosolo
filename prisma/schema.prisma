@@ -69,6 +69,7 @@ model Ukuran {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
   material Material[]
+  product Product[]
 }
 
 model Subcont {
@@ -101,7 +102,7 @@ model Divisi {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
-  formulaItem FormulaProduksi[]
+  formulaProduksi FormulaProduksi[]
 }
 
 model Material {
@@ -130,6 +131,7 @@ model FormulaItem {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
   formulaProduksi FormulaProduksi[]
+  subItem SubItem[]
 }
 
 model FormulaProduksi {
@@ -147,6 +149,101 @@ model FormulaUtama {
   id Int @id @default(autoincrement())
   name String
   price Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  subItem SubItem[]
+}
+
+model SubItem {
+  id Int @id @default(autoincrement())
+  amount Int? @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  formulaItemId Int
+  formulaItem FormulaItem @relation(fields: [formulaItemId], references: [id])
+  formulaUtamaId Int
+  formulaUtama FormulaUtama @relation(fields: [formulaUtamaId], references: [id])
+}
+
+model BarangJadi {
+  id Int @id @default(autoincrement())
+  name String
+  number String
+  qty Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model BarangSetengahJadi {
+  id Int @id @default(autoincrement())
+  name String
+  number String
+  qty Int
+  isStatus Int? @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Tools {
+  id Int @id @default(autoincrement())
+  name String
+  code String
+  desc String
+  amount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  toolsReduction ToolsReduction[]
+}
+
+model ToolsReduction {
+  id Int @id @default(autoincrement())
+  name String
+  desc String
+  amount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  toolsId Int
+  tools Tools @relation(fields: [toolsId], references: [id])
+}
+
+model Limbah {
+  id Int @id @default(autoincrement())
+  desc String
+  total Int
+  amount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model LimbahJual {
+  id Int @id @default(autoincrement())
+  desc String
+  price Int
+  amount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  code String
+  name String
+  price Int
+  productType Int
+  formulaId Int
+  isActive Int? @default(1)
+  priceX Int?
+  statusCheck Int? @default(0)
+  satuanId Int
+  satuan Ukuran @relation(fields: [satuanId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?

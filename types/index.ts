@@ -27,4 +27,6 @@ export type ModalState = {
     city?: string;
     address?: string;
     fax?: string;
+    number?: string;
+    qty?: string;
 };

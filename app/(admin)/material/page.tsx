@@ -3,8 +3,6 @@ import HeadingDetail from "@/components/HeadingDetail";
 import Link from "next/link";
 import prisma from "../../lib/prisma";
 import Table from "./table";
-import { jsPDF } from 'jspdf'
-import autoTable from 'jspdf-autotable'
 
 const getDatas = async () => {
   try {
