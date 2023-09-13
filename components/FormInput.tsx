@@ -1,8 +1,9 @@
 const FormInput = ({
-    label, placeholder, name, value, onChange
+    label, placeholder, required, name, value, onChange
 }: {
     label: string,
     placeholder: string,
+    required?: boolean
     name: string,
     value: string,
     onChange: (e: any) => void,
@@ -13,7 +14,7 @@ const FormInput = ({
             <input
                 type="text"
                 placeholder={placeholder}
-                required
+                required={required ?? true}
                 name={name}
                 autoComplete="off"
                 value={value}

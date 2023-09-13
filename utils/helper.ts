@@ -21,3 +21,11 @@ export const rupiah = (nominal: number) => {
         currency: "IDR"
     }).format(nominal);
 }
+
+export const generateCode = (digit: number, count: number, text: string) => {
+    const digitString = count.toString().padStart(digit, '0');
+
+    const result = `${text.toUpperCase()}-${digitString}`;
+
+    return result;
+}

@@ -35,11 +35,14 @@ const UpdateModal = ({
         e.preventDefault();
         setLoading(true);
 
-        axios.patch(`/api/material/${data.id}`, {
+        const body = {
             name: data.name,
             price: Number(data.price),
-            isStatus: Number(data.isStatus)
-        })
+            productType: Number(data.productType),
+            formulaId: Number(data.formulaId),
+        };
+
+        axios.patch(`/api/product/${data.id}`, body)
             .then(res => console.log(res.data))
             .catch(error => console.log(error.response.data.message ?? "Error saat proses berlangsung"))
             .finally(() => {
@@ -79,17 +82,17 @@ const UpdateModal = ({
                             value={data.price}
                             onChange={onChangeNumberHandler}
                         />
-                        <div className="form-control">
-                            <label>Status</label>
+                        <div className="form-control mb-4">
+                            <label>Jenis produk</label>
                             <select
-                                name="isStatus"
-                                value={data.isStatus}
+                                name="productType"
+                                value={data.productType}
                                 onChange={onSelectHandler}
-                                className="select input-bordered"
+                                className="select select-bordered"
                             >
-                                <option value="" disabled>Pilih status</option>
-                                <option value={1}>Tersedia</option>
-                                <option value={0}>Tidak Tersedia</option>
+                                <option value="" disabled>Pilih jenis produk</option>
+                                <option value="1">Item</option>
+                                <option value="2">Utama</option>
                             </select>
                         </div>
                         <div className="modal-action">

@@ -37,6 +37,7 @@ import {
 } from "react-icons/fa";
 
 import { CgFormatText, CgFormatUppercase } from "react-icons/cg";
+import { BsClipboardData, BsEnvelopePaper, BsFileEarmarkPlus, BsFillFileEarmarkPlusFill } from "react-icons/bs";
 
 const sidebar: SidebarItemProps[] = [
     {
@@ -132,6 +133,28 @@ const sidebar: SidebarItemProps[] = [
         path: '/sell',
         icon: <MdShoppingCart />,
         name: 'Penjualan',
+        submenu: [
+            {
+                path: '/order/create',
+                icon: <BsFileEarmarkPlus />,
+                name: 'Tambah Penjualan'
+            },
+            {
+                path: '/order/ym',
+                icon: <BsFillFileEarmarkPlusFill />,
+                name: 'Tambah Order YM'
+            },
+            {
+                path: '/order',
+                icon: <BsClipboardData />,
+                name: 'Data Penjualan'
+            },
+            {
+                path: '/sjso',
+                icon: <BsEnvelopePaper />,
+                name: 'Surat Jalan'
+            }
+        ]
     },
     {
         path: '/production',

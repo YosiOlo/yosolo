@@ -247,4 +247,22 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+  discount Discount[]
+}
+
+model Discount {
+  id Int @id @default(autoincrement())
+  name String
+  minOrder Int @default(1)
+  value Int
+  typeValue Int
+  desc String
+  startDate DateTime
+  endDate DateTime
+  isActive Int @default(1)
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 }
