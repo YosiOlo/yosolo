@@ -36,6 +36,7 @@ model User {
   status Status @relation(fields: [statusId], references: [id])
   roleId Int
   statusId Int
+  order Order[]
 }
 
 model Status {
@@ -60,6 +61,7 @@ model Customer {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+  order Order[]
 }
 
 model Ukuran {
@@ -262,6 +264,58 @@ model Discount {
   isActive Int @default(1)
   productId Int
   product Product @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  code String
+  customerId Int?
+  userId Int
+  poc String?
+  detail String
+  total Int
+  paymentMethod Int?
+  paymentStatus Int?
+  tenor Int? @default(0)
+  tempo Int? @default(0)
+  isStatus Int? @default(1)
+  reciver String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  customer Customer? @relation(fields: [customerId],references: [id])
+  user User @relation(fields: [userId], references: [id])
+  sjso Sjso[]
+}
+
+model Sjso {
+  id Int @id @default(autoincrement())
+  code String
+  orderId Int
+  tanggalKirim DateTime
+  tanggalTerima DateTime?
+  isStatus Int? @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  order Order @relation(fields: [orderId], references: [id])
+}
+
+model BarangSubcont {
+  id Int @id @default(autoincrement())
+  code String
+  subcontId Int
+  userId Int
+  total Int
+  paymentMethod Int?
+  paymentStatus Int?
+  tenor Int?
+  tempo Int?
+  refSj String?
+  isStatus Int? @default(1)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
