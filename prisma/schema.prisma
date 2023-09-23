@@ -37,6 +37,8 @@ model User {
   roleId Int
   statusId Int
   order Order[]
+  barangSubcont BarangSubcont[]
+  purchaseTools PurchaseTools[]
 }
 
 model Status {
@@ -84,6 +86,7 @@ model Subcont {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+  barangSubcont BarangSubcont[]
 }
 
 model Suplier {
@@ -277,8 +280,8 @@ model Order {
   poc String?
   detail String
   total Int
-  paymentMethod Int?
-  paymentStatus Int?
+  paymentMethod Int? @default(1)
+  paymentStatus Int? @default(1)
   tenor Int? @default(0)
   tempo Int? @default(0)
   isStatus Int? @default(1)
@@ -310,8 +313,8 @@ model BarangSubcont {
   subcontId Int
   userId Int
   total Int
-  paymentMethod Int?
-  paymentStatus Int?
+  paymentMethod Int? @default(1)
+  paymentStatus Int? @default(1)
   tenor Int?
   tempo Int?
   refSj String?
@@ -319,4 +322,44 @@ model BarangSubcont {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+  subcont Subcont @relation(fields: [subcontId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  detail BarangSubcontDetail[]
+}
+
+model BarangSubcontDetail {
+  id Int @id @default(autoincrement())
+  barangSubcontId Int
+  produksiId Int?
+  productId Int
+  productName String
+  bayar Int
+  qty Int
+  satuan String
+  subtotal Int
+  isStatus Int? @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  barangSubcont BarangSubcont @relation(fields: [barangSubcontId], references: [id])
+}
+
+model PurchaseTools {
+  id Int @id @default(autoincrement())
+  code String
+  supplier String
+  userId Int
+  detail String
+  ppn Int
+  paymentMethod Int? @default(1)
+  paymentStatus Int? @default(1)
+  total Int
+  tenor Int?
+  tempo Int?
+  reffSj String?
+  isStatus Int? @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  user User @relation(fields: [userId], references: [id])
 }

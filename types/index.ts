@@ -21,6 +21,15 @@ export interface InputDataMaterial {
     suplier: string[];
 }
 
+export interface DetailBarangSubcont {
+    productId: number;
+    productName: string;
+    qty: number;
+    bayar: number;
+    subtotal: number;
+    satuan: string;
+}
+
 export type ModalState = {
     name: string;
     phone?: string;

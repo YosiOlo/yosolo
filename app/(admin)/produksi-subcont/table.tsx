@@ -3,23 +3,21 @@
 import PaginationBar from "@/components/PaginationBar";
 import PerPageSelect from "@/components/PerPageSelect";
 import SearchBar from "@/components/SearchBar";
-import { rupiah } from "@/utils/helper";
-import { table } from "@/utils/table";
-import { motion } from "framer-motion";
-import { Fragment, useEffect, useState } from "react";
-import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
+import moment from "moment";
+import { useEffect, useState } from "react";
 import { MdInsertDriveFile } from "react-icons/md";
+import 'moment/locale/id';
+import { table } from "@/utils/table";
 
 const Table = ({
-    data, onRowClick
+    data, styleStatus, onRowClick,
 }: {
-    data: any[], onRowClick: (row: any) => void
+    data: any[]; styleStatus: any[]; onRowClick: (row: any) => void;
 }) => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
     const [filteredData, setFilteredData] = useState<any[]>([]);
     const [filtering, setFiltering] = useState(false);
-    const [isOpenRow, setIsOpenRow] = useState(false);
 
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -29,7 +27,7 @@ const Table = ({
 
     const handleSearch = (keyword: string) => {
         const filtered = data.filter(item =>
-            item.name?.toLowerCase().includes(keyword.toLowerCase())
+            item.subcont.name?.toLowerCase().includes(keyword.toLowerCase())
         );
         setFilteredData(filtered);
 
@@ -65,63 +63,60 @@ const Table = ({
             <table className="table border">
                 <thead className="bg-[#4e73df] text-white">
                     <tr>
-                        <th>#</th>
                         <th>Status</th>
                         <th>Nomor</th>
-                        <th>Nama Sales</th>
-                        <th>Nama Pelanggan</th>
-                        <th>Penerima</th>
-                        <th>Kode Order</th>
+                        <th>Kontraktor</th>
+                        <th>User</th>
+                        <th>Metode</th>
+                        <th>Status Bayar</th>
+                        <th>Tanggal</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData.slice(startIndex, endIndex).map((row, index) => (
-                        <Fragment key={index}>
-                            <tr className="hover">
-                                <td onClick={() => setIsOpenRow(!isOpenRow)}>
-                                    {isOpenRow ? <FaMinusCircle className="text-[#4e73df] mx-auto" />
-                                        : <FaPlusCircle className="text-[#4e73df] mx-auto" />}
-                                </td>
+                    {filteredData.slice(startIndex, endIndex).map((row, index) => {
+                        const methodStyle = table.getStyle('jenis_pembayaran', row.paymentMethod, styleStatus);
+                        const statusStyle = table.getStyle('status_pembayaran', row.paymentStatus, styleStatus);
+
+                        return (
+                            <tr className="hover" key={index}>
                                 <td className="cursor-pointer text-center capitalize">
-                                    {row.isStatus === 1 ? 'meminta' : row.isStatus === 2 ? 'pending'
+                                    {row.isStatus === 1 ? 'terima balik' : row.isStatus === 2 ? 'pending'
                                         : 'dibatalkan'}
                                 </td>
                                 <td>{row.code}</td>
-                                <td>{'sales'}</td>
-                                <td>{'pelanggan'}</td>
-                                <td>{row.order.reciver}</td>
-                                <td>{row.order.code}</td>
-                            </tr>
-                            <motion.tr
-                                animate={{
-                                    height: isOpenRow ? 'fit-content' : 0,
-                                    display: isOpenRow ? 'table-row' : 'none',
-                                }}
-                                className="overflow-hidden bg-white"
-                            >
-                                <td colSpan={7}>Tanggal: {row.updatedAt.toLocaleString()}</td>
-                            </motion.tr>
-                            <motion.tr
-                                animate={{
-                                    height: isOpenRow ? 'fit-content' : 0,
-                                    display: isOpenRow ? 'table-row' : 'none',
-                                }}
-                                className="overflow-hidden bg-white"
-                            >
-                                <td colSpan={7} className="flex gap-5 items-center">
-                                    Aksi: 
+                                <td>{row.subcont.name}</td>
+                                <td>{row.user.name}</td>
+                                <td>
+                                    <p
+                                        className="text-xs rounded-md inline-block m-auto p-2"
+                                        style={methodStyle.style}
+                                    >
+                                        {methodStyle.name}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p
+                                        className="text-xs rounded-md inline-block m-auto p-2"
+                                        style={statusStyle.style}
+                                    >
+                                        {statusStyle.name}
+                                    </p>
+                                </td>
+                                <td>{moment(row.createdAt).locale('id').format('DD MMM YY, hh:mm a')}</td>
+                                <td>
                                     <button
                                         className="tooltip btn btn-outline btn-primary btn-sm capitalize
-                                        font-light text-sm ml-5"
+                                        font-light text-sm"
                                         data-tip="lihat detail"
                                         onClick={() => onRowClick(row)}
                                     >
                                         <MdInsertDriveFile />
                                     </button>
                                 </td>
-                            </motion.tr>
-                        </Fragment>
-                    ))}
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
 

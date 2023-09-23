@@ -161,14 +161,14 @@ const FormOrder = ({
             reciver: otherData.reciver,
             paymentMethod: Number(otherData.paymentMethod),
         };
-        console.log(body);
-        // axios.post('/api/order', body)
-        //     .then(res => console.log(res.data))
-        //     .catch(err => console.log(err.response.data.message ?? 'Error saat POST berlangsung'))
-        //     .finally(() => {
-        //         setIsLoading(false);
-        //         router.push('/order');
-        //     });
+        
+        axios.post('/api/order', body)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err.response.data.message ?? 'Error saat POST berlangsung'))
+            .finally(() => {
+                setIsLoading(false);
+                router.push('/order');
+            });
     };
 
     const handleFilter = (selected: { id: number; name: string } | null, table: string) => {

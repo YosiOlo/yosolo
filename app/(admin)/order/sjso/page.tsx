@@ -15,7 +15,7 @@ const PageSJSO = async () => {
             <div className="text-sm breadcrumbs bg-gray-100 w-fit p-3 mb-5 rounded-md">
                 <ul>
                     <li><a>Dashboard</a></li>
-                    <li className="text-[#4e73df]">Penjualan</li>
+                    <li className="text-[#4e73df]">SJSO</li>
                 </ul>
             </div>
 

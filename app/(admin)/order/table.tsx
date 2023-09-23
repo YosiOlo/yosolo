@@ -4,6 +4,7 @@ import PaginationBar from "@/components/PaginationBar";
 import PerPageSelect from "@/components/PerPageSelect";
 import SearchBar from "@/components/SearchBar";
 import { rupiah } from "@/utils/helper";
+import { table } from "@/utils/table";
 import { motion } from "framer-motion";
 import { Fragment, useEffect, useState } from "react";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
@@ -20,15 +21,12 @@ const Table = ({
     const [filteredData, setFilteredData] = useState<any[]>([]);
     const [filtering, setFiltering] = useState(false);
     const [isOpenRow, setIsOpenRow] = useState(false);
-    const [isDetail, setIsDetail] = useState(false);
 
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
-    const handlePageChange = (pageIndex: number) => {
-        setCurrentPage(pageIndex);
-    };
+    const handlePageChange = (pageIndex: number) => setCurrentPage(pageIndex);
 
     const handleSearch = (keyword: string) => {
         const filtered = data.filter(item =>
@@ -45,13 +43,13 @@ const Table = ({
         setCurrentPage(0);
     };
 
-    const startEntry = startIndex + 1;
-    const endEntry = Math.min(endIndex, filteredData.length);
-    const totalData = filtering ? data.length : filteredData.length;
-    const showingText = filtering
-        ? `Menampilkan ${startEntry} sampai ${endEntry} dari ${totalData} 
-        data (difilter berdasarkan ${data.length} total data)`
-        : `Menampilkan ${startEntry} sampai ${endEntry} dari ${totalData} data`;
+    const showingText = table.generateShowingText(
+        startIndex + 1,
+        Math.min(endIndex, filteredData.length),
+        filtering ? data.length : filteredData.length,
+        filtering,
+        data.length
+    );
 
     useEffect(() => setFilteredData(data), [data]);
 

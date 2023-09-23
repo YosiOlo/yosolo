@@ -16,6 +16,9 @@ import {
     MdPeopleAlt,
     MdRocketLaunch,
     MdOutlineDiversity3,
+    MdAddShoppingCart,
+    MdKeyboardDoubleArrowRight,
+    MdKeyboardDoubleArrowLeft,
 } from "react-icons/md";
 
 import {
@@ -34,10 +37,19 @@ import {
     FaBox,
     FaRecycle,
     FaTable,
+    FaShoppingBag,
 } from "react-icons/fa";
 
 import { CgFormatText, CgFormatUppercase } from "react-icons/cg";
-import { BsClipboardData, BsEnvelopePaper, BsFileEarmarkPlus, BsFillFileEarmarkPlusFill } from "react-icons/bs";
+import {
+    BsClipboardData,
+    BsEnvelopePaper,
+    BsFileEarmarkPlus,
+    BsFillClipboardCheckFill,
+    BsFillFileEarmarkPlusFill,
+    BsGraphUpArrow,
+    BsPlusSquare 
+} from "react-icons/bs";
 
 const sidebar: SidebarItemProps[] = [
     {
@@ -150,21 +162,75 @@ const sidebar: SidebarItemProps[] = [
                 name: 'Data Penjualan'
             },
             {
-                path: '/sjso',
+                path: '/order/sjso',
                 icon: <BsEnvelopePaper />,
                 name: 'Surat Jalan'
             }
         ]
     },
     {
-        path: '/production',
+        path: '',
         icon: <MdWorkHistory />,
         name: 'Produksi',
+        submenu: [
+            {
+                path: '/cek-permintaan',
+                icon: <BsFillClipboardCheckFill />,
+                name: 'Permintaan Produksi'
+            },
+            {
+                path: '/produksi',
+                icon: <BsGraphUpArrow />,
+                name: 'Proses Produksi'
+            },
+            {
+                path: '/produksi-subcont',
+                icon: <BsEnvelopePaper />,
+                name: 'Surat Jalan Subcont'
+            },
+        ]
     },
     {
-        path: '/buy',
+        path: '/',
         icon: <MdShoppingBasket />,
         name: 'Pembelian',
+        submenu: [
+            {
+                path: '/purchase/create',
+                icon: <MdAddShoppingCart />,
+                name: 'Beli Material'
+            },
+            {
+                path: '/purchase',
+                icon: <MdShoppingCart />,
+                name: 'Data Pemb. Material'
+            },
+            {
+                path: '/permintaan-material',
+                icon: <MdShoppingCartCheckout />,
+                name: 'Permintaan Material'
+            },
+            {
+                path: '/material-masuk',
+                icon: <MdKeyboardDoubleArrowRight />,
+                name: 'Material Masuk'
+            },
+            {
+                path: '/material-keluar',
+                icon: <MdKeyboardDoubleArrowLeft />,
+                name: 'Material Keluar'
+            },
+            {
+                path: '/purchase-tools/create',
+                icon: <MdAddShoppingCart />,
+                name: 'Beli Alat'
+            },
+            {
+                path: '/purchase-tools',
+                icon: <MdShoppingCart />,
+                name: 'Pembelian Alat'
+            },
+        ]
     },
     {
         path: '/angsuran',
