@@ -42,13 +42,13 @@ const CreatePage = async () => {
             <div className="text-sm breadcrumbs bg-gray-100 w-fit p-3 mb-5 rounded-md">
                 <ul>
                     <li><a>Dashboard</a></li>
-                    <li><Link href="/produksi-subcont">Daftar Barang Subcont</Link></li>
-                    <li className="text-[#4e73df]">Tamabh</li>
+                    <li><Link href="/purchase-tools">Daftar Pembelian Peralatan</Link></li>
+                    <li className="text-[#4e73df]">Tambah</li>
                 </ul>
             </div>
 
             <div>
-                <h3 className="p-3 bg-gray-100 border">Tambah Barang Subcont</h3>
+                <h3 className="p-3 bg-gray-100 border">Pembelian Peralatan</h3>
                 <FormOrder code={code} product={tools} />
             </div>
         </div>

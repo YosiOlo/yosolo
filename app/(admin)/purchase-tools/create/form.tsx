@@ -37,6 +37,7 @@ const FormOrder = ({
         ppnButton: false,
         total: 0,
         tempo: '',
+        tenor: '',
         totalAfterPpn: 0,
         paymentMethod: '',
     });
@@ -181,6 +182,7 @@ const FormOrder = ({
             ppn: otherData.ppn,
             tempo: Number(otherData.tempo),
             total: otherData.totalAfterPpn,
+            tenor: otherData.paymentMethod === '1' ? otherData.totalAfterPpn : Number(otherData.tenor),
             paymentMethod: Number(otherData.paymentMethod),
         };
         
@@ -242,6 +244,25 @@ const FormOrder = ({
                             <span className="absolute text-gray-500 top-1/2 transform -translate-y-1/2
                             mr-4 right-0">
                                 Hari
+                            </span>
+                        </div>
+                    </div>
+                )}
+                {otherData.paymentMethod === '2' && (
+                    <div className="form-control mb-4">
+                        <label>Uang muka</label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                name="tenor"
+                                placeholder="Masukan DP . . ."
+                                onChange={handleNumber}
+                                value={otherData.tenor}
+                                className="input input-bordered w-full"
+                            />
+                            <span className="absolute text-gray-500 top-1/2 transform -translate-y-1/2
+                            mr-4 right-0">
+                                Rupiah
                             </span>
                         </div>
                     </div>

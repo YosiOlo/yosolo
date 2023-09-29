@@ -37,7 +37,6 @@ import {
     FaBox,
     FaRecycle,
     FaTable,
-    FaShoppingBag,
 } from "react-icons/fa";
 
 import { CgFormatText, CgFormatUppercase } from "react-icons/cg";
@@ -48,8 +47,12 @@ import {
     BsFillClipboardCheckFill,
     BsFillFileEarmarkPlusFill,
     BsGraphUpArrow,
-    BsPlusSquare 
 } from "react-icons/bs";
+
+import {
+    TbReportAnalytics,
+    TbReportMoney,
+} from "react-icons/tb";
 
 const sidebar: SidebarItemProps[] = [
     {
@@ -233,14 +236,58 @@ const sidebar: SidebarItemProps[] = [
         ]
     },
     {
-        path: '/angsuran',
+        path: '/',
         icon: <MdDiscount />,
         name: 'Angsuran',
+        submenu: [
+            {
+                path: '/pelunasan-so',
+                icon: <TbReportMoney />,
+                name: 'Pelunasan SO'
+            },
+            {
+                path: '/pelunasan-po',
+                icon: <TbReportMoney />,
+                name: 'Pelunasan PO'
+            },
+            {
+                path: '/pelunasan-pt',
+                icon: <TbReportMoney />,
+                name: 'Pelunasan PT'
+            },
+            {
+                path: '/pelunasan-subcont',
+                icon: <TbReportMoney />,
+                name: 'Pelunasan Subcont'
+            },
+        ]
     },
     {
-        path: '/report',
+        path: '/',
         icon: <MdTask />,
         name: 'Laporan',
+        submenu: [
+            {
+                path: '/report-penjualan',
+                icon: <TbReportAnalytics />,
+                name: 'Penjualan'
+            },
+            {
+                path: '/report-produksi',
+                icon: <TbReportAnalytics />,
+                name: 'Produksi'
+            },
+            {
+                path: '/report-material',
+                icon: <TbReportAnalytics />,
+                name: 'Pembelian Material'
+            },
+            {
+                path: '/report-tools',
+                icon: <TbReportAnalytics />,
+                name: 'Pembelian Alat'
+            },
+        ]
     },
     {
         path: '/req-ship',

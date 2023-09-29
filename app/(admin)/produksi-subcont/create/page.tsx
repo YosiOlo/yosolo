@@ -51,7 +51,7 @@ const CreatePage = async () => {
                 <ul>
                     <li><a>Dashboard</a></li>
                     <li><Link href="/produksi-subcont">Daftar Barang Subcont</Link></li>
-                    <li className="text-[#4e73df]">Tamabh</li>
+                    <li className="text-[#4e73df]">Tambah</li>
                 </ul>
             </div>
 
