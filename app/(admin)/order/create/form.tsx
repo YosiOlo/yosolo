@@ -33,6 +33,8 @@ const FormOrder = ({
     const [otherData, setOtherData] = useState({
         poc: '',
         reciver: '',
+        tempo: '',
+        tenor: '',
         paymentMethod: '',
     })
 
@@ -40,9 +42,7 @@ const FormOrder = ({
     const endIndex = startIndex + itemsPerPage;
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
-    const handlePageChange = (pageIndex: number) => {
-        setCurrentPage(pageIndex);
-    };
+    const handlePageChange = (pageIndex: number) => setCurrentPage(pageIndex);
 
     const tabChangeHandler = (tab: number) => setSelectedTab(tab);
 
@@ -87,10 +87,7 @@ const FormOrder = ({
         data (difilter berdasarkan ${data.length} total data)`
         : `Menampilkan ${startEntry} sampai ${endEntry} dari ${totalData} data`;
 
-    useEffect(() => {
-        setFilteredData(data);
-        console.log(selectedCus)
-    }, [data, selectedCus]);
+    useEffect(() => setFilteredData(data), [data, selectedCus]);
 
     const [itemStocks, setItemStocks] = useState<any>({});
 
@@ -157,17 +154,19 @@ const FormOrder = ({
             customerId: Number(selectedCus.id),
             detail: JSON.stringify(items),
             total: totalPrice,
+            tempo: Number(otherData.tempo),
+            tenor: otherData.paymentMethod === '1' ? totalPrice : Number(otherData.tenor),
             poc: otherData.poc,
             reciver: otherData.reciver,
             paymentMethod: Number(otherData.paymentMethod),
         };
-        
+
         axios.post('/api/order', body)
             .then(res => console.log(res.data))
             .catch(err => console.log(err.response.data.message ?? 'Error saat POST berlangsung'))
             .finally(() => {
                 setIsLoading(false);
-                router.push('/order');
+                // router.push('/order');
             });
     };
 
@@ -181,86 +180,86 @@ const FormOrder = ({
         setOtherData({ ...otherData, [e.target.name]: e.target.value });
     };
 
+    const handleNumber = (e: any) => {
+        setOtherData({ ...otherData, [e.target.name]: e.target.value.replace(/[^0-9]/g, '') });
+    };
+
     return (
         <div className="p-3 border">
-            <div className="flex flex-col sm:flex-row">
-                <div className="flex-1">
-                    <FilterSelect
-                        options={customer}
-                        onSelectFilter={handleFilter}
-                        table="suplier"
+            <div className="grid grid-cols-2 gap-4">
+                <FilterSelect
+                    options={customer}
+                    onSelectFilter={handleFilter}
+                    table="suplier"
+                />
+                <div className="form-control mb-4">
+                    <label>Nomor SO</label>
+                    <input
+                        type="text"
+                        name="code"
+                        value={code}
+                        readOnly
+                        className="input input-bordered input-disabled"
                     />
-                    <FormInput
-                        label="po customer"
-                        name="poc"
-                        placeholder="Ketik disini . . ."
-                        value={otherData.poc}
-                        onChange={handleChange}
-                    />
-                    <FormInput
-                        label="penerima"
-                        name="reciver"
-                        placeholder="Ketik disini . . ."
-                        value={otherData.reciver}
-                        onChange={handleChange}
-                    />
-                    <div className="form-control mb-4">
-                        <label>Telepon</label>
-                        <input
-                            type="text"
-                            value={selectedCus.phone ?? ''}
-                            readOnly
-                            className="input input-bordered input-disabled"
-                        />
-                    </div>
-                    <div className="form-control mb-4">
-                        <label>Alamat</label>
-                        <input
-                            type="text"
-                            value={selectedCus.address ?? ''}
-                            readOnly
-                            className="input input-bordered input-disabled"
-                        />
-                    </div>
-                    <div className="form-control mb-4">
-                        <label>Kota</label>
-                        <input
-                            type="text"
-                            value={selectedCus.city ?? ''}
-                            readOnly
-                            className="input input-bordered input-disabled"
-                        />
-                    </div>
                 </div>
-                <div className="flex-1">
-                    <div className="form-control mb-4">
-                        <label>Nomor SO</label>
-                        <input
-                            type="text"
-                            name="code"
-                            value={code}
-                            readOnly
-                            className="input input-bordered input-disabled"
-                        />
-                    </div>
-                    <div className="form-control mb-4">
-                        <label>Tanggal</label>
-                        <input
-                            type="text"
-                            value={new Date().toLocaleString()}
-                            readOnly
-                            className="input input-bordered input-disabled"
-                        />
-                    </div>
-                    <div className="form-control mb-4">
-                        <label>Mata Uang</label>
-                        <input
-                            type="text"
-                            value="(IDR) Rupiah"
-                            readOnly
-                            className="input input-bordered input-disabled"
-                        />
-                    </div>
+                <div className="form-control mb-4">
+                    <label>Tanggal</label>
+                    <input
+                        type="text"
+                        value={new Date().toLocaleString()}
+                        readOnly
+                        className="input input-bordered input-disabled"
+                    />
+                </div>
+                <div className="form-control mb-4">
+                    <label>Mata Uang</label>
+                    <input
+                        type="text"
+                        value="(IDR) Rupiah"
+                        readOnly
+                        className="input input-bordered input-disabled"
+                    />
+                </div>
+                <FormInput
+                    label="po customer"
+                    name="poc"
+                    placeholder="Ketik disini . . ."
+                    value={otherData.poc}
+                    onChange={handleChange}
+                />
+                <FormInput
+                    label="penerima"
+                    name="reciver"
+                    placeholder="Ketik disini . . ."
+                    value={otherData.reciver}
+                    onChange={handleChange}
+                />
+                <div className="form-control mb-4">
+                    <label>Telepon</label>
+                    <input
+                        type="text"
+                        value={selectedCus.phone ?? ''}
+                        readOnly
+                        className="input input-bordered input-disabled"
+                    />
+                </div>
+                <div className="form-control mb-4">
+                    <label>Alamat</label>
+                    <input
+                        type="text"
+                        value={selectedCus.address ?? ''}
+                        readOnly
+                        className="input input-bordered input-disabled"
+                    />
+                </div>
+                <div className="form-control mb-4">
+                    <label>Kota</label>
+                    <input
+                        type="text"
+                        value={selectedCus.city ?? ''}
+                        readOnly
+                        className="input input-bordered input-disabled"
+                    />
                 </div>
             </div>
             <button
@@ -333,6 +332,7 @@ const FormOrder = ({
                                 value={otherData.paymentMethod}
                                 onChange={handleChange}
                                 className="select select-bordered"
+                                required
                             >
                                 <option value="" disabled>Pilih jenis</option>
                                 <option value="1">Cash</option>
@@ -341,6 +341,48 @@ const FormOrder = ({
                             </select>
                         </td>
                     </tr>
+                    {otherData.paymentMethod && otherData.paymentMethod !== '1' && (
+                        <tr>
+                            <td colSpan={3} className="text-right">Tempo</td>
+                            <td>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        name="tempo"
+                                        placeholder="Masukan tempo . . ."
+                                        onChange={handleNumber}
+                                        value={otherData.tempo}
+                                        className="input input-bordered w-full"
+                                    />
+                                    <span className="absolute text-gray-500 top-1/2 transform
+                                        -translate-y-1/2 mr-4 right-0">
+                                        Hari
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    )}
+                    {otherData.paymentMethod === '2' && (
+                        <tr>
+                            <td colSpan={3} className="text-right">Uang muka</td>
+                            <td>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        name="tenor"
+                                        placeholder="Masukan DP . . ."
+                                        onChange={handleNumber}
+                                        value={otherData.tenor}
+                                        className="input input-bordered w-full"
+                                    />
+                                    <span className="absolute text-gray-500 top-1/2 transform -translate-y-1/2
+                                    mr-4 right-0">
+                                        Rupiah
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
 

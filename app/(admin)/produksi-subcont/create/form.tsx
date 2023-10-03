@@ -33,6 +33,7 @@ const FormOrder = ({
     const [selectedCus, setSelectedCus] = useState<any>({});
     const [otherData, setOtherData] = useState({
         tempo: '',
+        tenor: '',
         pricePerItem: '',
         paymentMethod: '',
     })
@@ -120,6 +121,7 @@ const FormOrder = ({
             subcontId: Number(selectedCus.id),
             total: totalPrice,
             tempo: Number(otherData.tempo),
+            tenor: otherData.paymentMethod === '1' ? totalPrice : Number(otherData.tenor),
             paymentMethod: Number(otherData.paymentMethod),
             detail: items,
         };
@@ -225,6 +227,25 @@ const FormOrder = ({
                                 <span className="absolute text-gray-500 top-1/2 transform -translate-y-1/2
                             mr-4 right-0">
                                     Hari
+                                </span>
+                            </div>
+                        </div>
+                    )}
+                    {otherData.paymentMethod === '2' && (
+                        <div className="form-control mb-4">
+                            <label>Uang muka</label>
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    name="tenor"
+                                    placeholder="Masukan DP . . ."
+                                    onChange={numberChange}
+                                    value={otherData.tenor}
+                                    className="input input-bordered w-full"
+                                />
+                                <span className="absolute text-gray-500 top-1/2 transform -translate-y-1/2
+                            mr-4 right-0">
+                                    Rupiah
                                 </span>
                             </div>
                         </div>

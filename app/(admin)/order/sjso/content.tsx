@@ -18,7 +18,7 @@ const Content = ({ data }: { data: any[] }) => {
 
     useEffect(() => {
         const excel = data.map(item => ({
-            "STATUS": item.code,
+            "STATUS": item.isStatus === 1 ? 'Pembelian' : '-',
             "NOMOR": item.code,
             "NAMA PELANGGAN": item.customer ? item.customer.name : '(kosong)',
             "NAMA SALES": item.user.name,

@@ -42,7 +42,7 @@ const CreatePage = async () => {
     const month = (a.getMonth() + 1).toString().padStart(2, '0');
     const day = a.getDate().toString().padStart(2, '0');
 
-    const formattedDate = 'SO' + year + month + day;
+    const formattedDate = 'BSTJ' + year + month + day;
     const code = generateCode(6, counter + 1, formattedDate);
 
     return (

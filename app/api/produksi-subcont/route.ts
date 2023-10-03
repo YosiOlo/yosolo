@@ -13,6 +13,7 @@ export const POST = async (request: Request) => {
             userId: body.userId,
             subcontId: body.subcontId,
             paymentMethod: body.paymentMethod,
+            paymentStatus: body.paymentMethod === 1 ? 1 : 2,
         }
     });
 

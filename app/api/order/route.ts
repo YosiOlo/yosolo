@@ -6,7 +6,10 @@ export const POST = async (request: Request) => {
     const body = await request.json();
 
     const result = await prisma.order.create({
-        data: body
+        data: {
+            ...body,
+            paymentStatus: body.paymentMethod === 1 ? 1 : 2,
+        }
     });
 
     if (!result) return NextResponse.json({ message: 'Gagal menambahkan data' }, { status: 400 });

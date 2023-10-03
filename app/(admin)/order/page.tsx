@@ -16,8 +16,22 @@ const getOrders = async () => {
   }
 };
 
+const getStatus = async () => {
+  const result = await prisma.status.findMany({
+      select: {
+          fkey: true,
+          bgColor: true,
+          fontColor: true,
+          name: true,
+          module: true,
+      },
+  });
+
+  return result;
+};
+
 const OrderPage = async () => {
-  const dataOrder = await getOrders();
+  const [dataOrder, statuses] = await Promise.all([getOrders(), getStatus()]);
 
   return (
     <div className="p-5 w-full">
@@ -28,7 +42,7 @@ const OrderPage = async () => {
         </ul>
       </div>
 
-      {dataOrder && <Content data={dataOrder} />}
+      {dataOrder && <Content data={dataOrder} style={statuses} />}
     </div>
   );
 };

@@ -7,8 +7,27 @@ const getSJSO = async () => {
     return result;
 };
 
+const getOrders = async () => {
+    try {
+      const result = await prisma.order.findMany({
+        where: { deletedAt: null },
+        orderBy: { updatedAt: 'desc' },
+        include: {
+            customer: true,
+            user: true,
+            sjso: true,
+        },
+      })
+  
+      return result;
+  
+    } catch (error) {
+      console.log('error get', error);
+    }
+  };
+
 const PageSJSO = async () => {
-    const sjso = await getSJSO();
+    const [sjso, orders] = await Promise.all([getSJSO(), getOrders()]);
 
     return (
         <div className="p-5 w-full">
@@ -19,7 +38,7 @@ const PageSJSO = async () => {
                 </ul>
             </div>
 
-            {sjso && <Content data={sjso} />}
+            {orders && <Content data={orders} />}
         </div>
     );
 };

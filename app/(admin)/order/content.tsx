@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa";
 import DetailComponent from "./detail";
 import Table from "./table";
 
-const Content = ({ data }: { data: any[] }) => {
+const Content = ({ data, style }: { data: any[], style: any[] }) => {
     const [pageDetail, setPageDetail] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState<any>({});
     const [dataOrder, setDataOrder] = useState<any>({
@@ -60,8 +60,12 @@ const Content = ({ data }: { data: any[] }) => {
                 )}
             </div>
 
-            {pageDetail ? <DetailComponent data={selectedRowData} /> 
-            : <Table data={dataOrder.update} onRowClick={handleRowClick}/>}
+            {pageDetail ? <DetailComponent data={selectedRowData} />
+                : <Table
+                    data={dataOrder.update}
+                    onRowClick={handleRowClick}
+                    style={style}
+                />}
         </>
     );
 };

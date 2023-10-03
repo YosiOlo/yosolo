@@ -87,21 +87,36 @@ const Table = ({
                                         : 'dibatalkan'}
                                 </td>
                                 <td>{row.code}</td>
-                                <td>{'sales'}</td>
-                                <td>{'pelanggan'}</td>
-                                <td>{row.order.reciver}</td>
-                                <td>{row.order.code}</td>
+                                <td>{row.user.name}</td>
+                                <td>{row.customer ? row.customer.name : '-'}</td>
+                                <td>{row.reciver || '-'}</td>
+                                <td>{row.sjso.code}</td>
                             </tr>
-                            <motion.tr
-                                animate={{
-                                    height: isOpenRow ? 'fit-content' : 0,
-                                    display: isOpenRow ? 'table-row' : 'none',
-                                }}
-                                className="overflow-hidden bg-white"
-                            >
-                                <td colSpan={7}>Tanggal: {row.updatedAt.toLocaleString()}</td>
-                            </motion.tr>
-                            <motion.tr
+                            <tr>
+                                <td colSpan={3} className="p-0">
+                                    <motion.div
+                                        animate={{
+                                            height: isOpenRow ? 'fit-content' : 0,
+                                            margin: isOpenRow ? 12 : 0,
+                                        }}
+                                        className="flex overflow-hidden"
+                                    >
+                                        <p>Tanggal penerimaan</p>
+                                    </motion.div>
+                                </td>
+                                <td colSpan={4} className="p-0">
+                                    <motion.div
+                                        animate={{
+                                            height: isOpenRow ? 'fit-content' : 0,
+                                            margin: isOpenRow ? 12 : 0,
+                                        }}
+                                        className="flex overflow-hidden"
+                                    >
+                                        <p>: {row.updatedAt.toLocaleString()}</p>
+                                    </motion.div>
+                                </td>
+                            </tr>
+                            {/* <motion.tr
                                 animate={{
                                     height: isOpenRow ? 'fit-content' : 0,
                                     display: isOpenRow ? 'table-row' : 'none',
@@ -119,7 +134,7 @@ const Table = ({
                                         <MdInsertDriveFile />
                                     </button>
                                 </td>
-                            </motion.tr>
+                            </motion.tr> */}
                         </Fragment>
                     ))}
                 </tbody>

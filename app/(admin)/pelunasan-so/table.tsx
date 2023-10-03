@@ -5,15 +5,15 @@ import PerPageSelect from "@/components/PerPageSelect";
 import SearchBar from "@/components/SearchBar";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { MdInsertDriveFile } from "react-icons/md";
 import 'moment/locale/id';
 import { table } from "@/utils/table";
-import ModalError from "../order/modalError";
+import ModalUpdate from "./modal";
+import { rupiah } from "@/utils/helper";
 
 const Table = ({
-    data, styleStatus, onRowClick,
+    data, styleStatus
 }: {
-    data: any[]; styleStatus: any[]; onRowClick: (row: any) => void;
+    data: any[]; styleStatus: any[];
 }) => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
@@ -28,7 +28,7 @@ const Table = ({
 
     const handleSearch = (keyword: string) => {
         const filtered = data.filter(item =>
-            item.subcont.name?.toLowerCase().includes(keyword.toLowerCase())
+            item.supplier?.toLowerCase().includes(keyword.toLowerCase())
         );
         setFilteredData(filtered);
 
@@ -64,13 +64,13 @@ const Table = ({
             <table className="table border">
                 <thead className="bg-[#4e73df] text-white">
                     <tr>
-                        <th>Status</th>
-                        <th>Nomor</th>
-                        <th>Kontraktor</th>
-                        <th>User</th>
                         <th>Metode</th>
                         <th>Status Pembayaran</th>
+                        <th>Nomor</th>
                         <th>Tanggal</th>
+                        <th>Nama Pelanggan</th>
+                        <th>Nama Sales</th>
+                        <th>Total</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -81,13 +81,6 @@ const Table = ({
 
                         return (
                             <tr className="hover" key={index}>
-                                <td className="cursor-pointer text-center capitalize">
-                                    {row.isStatus === 1 ? 'terima balik' : row.isStatus === 2 ? 'pending'
-                                        : 'dibatalkan'}
-                                </td>
-                                <td>{row.code}</td>
-                                <td>{row.subcont.name}</td>
-                                <td>{row.user.name}</td>
                                 <td>
                                     <p
                                         className="text-xs rounded-md inline-block m-auto p-2"
@@ -104,25 +97,34 @@ const Table = ({
                                         {statusStyle.name}
                                     </p>
                                 </td>
-                                <td>{moment(row.createdAt).locale('id').format('DD MMM YY, hh:mm a')}</td>
+                                <td>{row.code}</td>
+                                <td>{moment(row.createdAt).locale('id').format('LL')}</td>
+                                <td>{row.customer ? row.customer.name : '-'}</td>
+                                <td>{row.user.name}</td>
+                                <td>{rupiah(row.total)}</td>
                                 <td>
-                                    <div className="flex gap-2">
-                                        <button
-                                            className="tooltip btn btn-outline btn-primary btn-sm capitalize
-                                            font-light text-sm"
-                                            data-tip="lihat detail"
-                                            onClick={() => onRowClick(row)}
-                                        >
-                                            <MdInsertDriveFile />
-                                        </button>
-                                        {row.isStatus === 1 && <ModalError
-                                            id={row.id}
-                                            table="produksi-subcont"
-                                            title="batalkan pembelian"
-                                            tooltip="batalkan pembelian"
-                                            message={`Apakah kamu yakin membatalkan order dengan id ${row.code}`}
-                                        />}
-                                    </div>
+                                    {row.paymentMethod !== 1 && row.paymentStatus === 2 && <ModalUpdate
+                                        data={row}
+                                        showData={{
+                                            code: 'Nomor SO',
+                                            createdAt: 'Tanggal',
+                                            total: 'Total pembayaran',
+                                        }}
+                                        paymentMethod={
+                                            <>
+                                                <td className="text-right">Metode Bayar :</td>
+                                                <td>
+                                                    <p
+                                                        className="rounded-md inline-block m-auto p-2"
+                                                        style={methodStyle.style}
+                                                    >
+                                                        {methodStyle.name}
+                                                    </p>
+                                                </td>
+                                            </>
+                                        }
+                                        tableName="order"
+                                    />}
                                 </td>
                             </tr>
                         );

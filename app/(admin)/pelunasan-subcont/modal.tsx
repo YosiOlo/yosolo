@@ -2,14 +2,15 @@
 
 import { rupiah } from "@/utils/helper";
 import axios from "axios";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 
 const ModalUpdate = ({
-    data, showData, table
+    data, showData, tableName, paymentMethod
 }: {
     data: any;
     showData: { [key: string]: string };
-    table: string;
+    tableName: string;
+    paymentMethod: JSX.Element;
 }) => {
     const [isModalShow, setIsModalShow] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -26,8 +27,8 @@ const ModalUpdate = ({
 
     const handleSubmit = () => {
         setIsLoading(true);
-
-        axios.patch(`/api/${table}/${data.id}`, {
+        
+        axios.patch(`/api/${tableName}/${data.id}`, {
             tenor: Number(nominal),
         })
             .then(res => console.log(res.data))
@@ -56,11 +57,31 @@ const ModalUpdate = ({
                             {Object.entries(showData).map(([key, val], i) => (
                                 <tr key={i}>
                                     <td className="text-right">{val} :</td>
-                                    <td>{key === 'createdAt' ? new Date(data[key]).toLocaleDateString() : data[key]}</td>
+                                    <td>
+                                        {key === 'createdAt' ? new Date(data[key]).toLocaleDateString()
+                                            : key === 'total' ? rupiah(data[key]): data[key]}
+                                    </td>
                                 </tr>
                             ))}
+                            <tr>{paymentMethod}</tr>
                             <tr>
-                                <td className="text-right text error font-bold">Sisa pembayaran :</td>
+                                <td className="text-right">Kontraktor :</td>
+                                <td>{data.subcont.name}</td>
+                            </tr>
+                            <tr>
+                                <td className="text-right">Telepon :</td>
+                                <td>{data.subcont.phone}</td>
+                            </tr>
+                            <tr>
+                                <td className="text-right">Alamat :</td>
+                                <td>{data.subcont.address}</td>
+                            </tr>
+                            <tr>
+                                <td className="text-right">Nama User :</td>
+                                <td>{data.user.name}</td>
+                            </tr>
+                            <tr>
+                                <td className="text-right text-error font-bold">Sisa pembayaran :</td>
                                 <td>{rupiah((data.total - data.tenor) - Number(nominal))}</td>
                             </tr>
                             <tr>
